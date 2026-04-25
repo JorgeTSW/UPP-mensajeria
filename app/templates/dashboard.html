@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head><title>Profesor Dashboard</title></head>
+<body style="font-family:sans-serif; padding:20px;">
+    <h2>Panel de Control - Mensajes SQS</h2>
+    <table border="1" style="width:100%; text-align:left;">
+        <tr>
+            <th>ID Mensaje</th>
+            <th>Contenido</th>
+            <th>Acción</th>
+        </tr>
+        {% for msg in mensajes %}
+        <tr>
+            <td>{{ msg.MessageId }}</td>
+            <td>{{ msg.Body }}</td>
+            <td>
+                <form action="/procesar" method="post">
+                    <input type="hidden" name="receipt_handle" value="{{ msg.ReceiptHandle }}">
+                    <button type="submit">Procesar (Borrar)</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <button onclick="location.reload()">Refrescar Cola</button>
+</body>
+</html>
